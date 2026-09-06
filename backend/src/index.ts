@@ -2,12 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import { initializeSchema } from './db/schema';
 import authRoutes from './routes/auth';
 import usersRoutes from './routes/users';
 import recordsRoutes from './routes/records';
 import dashboardRoutes from './routes/dashboard';
 
 dotenv.config();
+
+// Create database tables if they don't exist yet
+initializeSchema();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
