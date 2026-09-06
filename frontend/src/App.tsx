@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Sidebar from './components/Sidebar';
@@ -6,7 +5,6 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Records from './pages/Records';
 import Users from './pages/Users';
-
 // Protected Route Wrapper
 const ProtectedRoute = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   const { isAuthenticated, user } = useAuth();
@@ -15,7 +13,6 @@ const ProtectedRoute = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />;
   }
-
   return (
     <div className="app-container">
       <Sidebar />
@@ -25,7 +22,6 @@ const ProtectedRoute = ({ allowedRoles }: { allowedRoles?: string[] }) => {
     </div>
   );
 };
-
 const AppRoutes = () => {
   return (
     <Routes>
@@ -35,20 +31,16 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
-
       <Route element={<ProtectedRoute allowedRoles={['Admin', 'Analyst']} />}>
         <Route path="/records" element={<Records />} />
       </Route>
-
       <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
         <Route path="/users" element={<Users />} />
       </Route>
-
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 };
-
 function App() {
   return (
     <>
@@ -63,5 +55,4 @@ function App() {
     </>
   );
 }
-
 export default App;
