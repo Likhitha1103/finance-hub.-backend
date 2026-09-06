@@ -27,7 +27,7 @@ app.use('/api', router);
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
 // For any route that isn't an API route, serve the frontend (supports client-side routing)
-app.get('*', (req, res) => {
+app.use((req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ error: 'Endpoint not found' });
   }
